@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Customer",
+            "request": "launch",
+            "mainClass": "baraber.Customer"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BarberShop",
+            "request": "launch",
+            "mainClass": "baraber.BarberShop"
+        }
+    ]
+}
