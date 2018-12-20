@@ -14,10 +14,10 @@ public class Solution{
 
     // 生产者
     static class Producer implements Runnable {
-        static int num = 1;
+        static int produce_num = 1;
         @Override
         public void run() {
-            int n = num++;//每个生产者的产量与生成顺序成正比
+            int n = produce_num++;//每个生产者的产量与生成顺序成正比
             while (true) {
                 try {
                     wareHouse.produce(n);
@@ -50,28 +50,31 @@ public class Solution{
      *
      */
     static class Warehouse {
-        // 非满锁，最多允许10个生产者
-        final Semaphore notFull = new Semaphore(10);
-        // 非空锁  
+        // 非满锁
+        final Semaphore notFull = new Semaphore(1);
+        // 非空锁，用于允许消费者进行消费
         final Semaphore notEmpty = new Semaphore(0);
         // 核心锁  
         final Semaphore mutex = new Semaphore(1);
         // 库存容量  
         final Object[] items = new Object[10];
-        int producePointer, consumePointer, count;
+        // 指针，指定当前生产者消费者
+        int producePointer, consumePointer;
 
         public void produce(Object x) throws InterruptedException {
             // 保证非满，无法得到就阻塞
+            System.out.println("Requesting the notFull Semaphore.");
             notFull.acquire();
+            System.out.println("Acquired notFull semaphore,requesting the mutex.");
             // 保证操作临界区时不发生冲突
             mutex.acquire();
+            System.out.println("Mutex acquired,start producing");
             try {
                 // 增加库存  
                 items[producePointer] = x;
                 producePointer++;
                 //实现循环
                 if (producePointer == items.length) producePointer = 0;
-                count++;
             } finally {
                 // 退出临界区
                 mutex.release();
@@ -82,16 +85,18 @@ public class Solution{
 
         public Object consume() throws InterruptedException {
             // 保证非空，如果无法得到就阻塞
+            System.out.println("Requesting the notEmpty semaphore.");
             notEmpty.acquire();
+            System.out.println("Acquired notEmpty semaphore,requesting the mutex.");
             // 保证操作临界区时不发生冲突
             mutex.acquire();
+            System.out.println("Mutex acquired,start consuming");
             try {
                 // 减少库存  
                 Object x = items[consumePointer];
                 consumePointer++;
                 //实现循环队列，到最后时回到数组头
                 if (consumePointer == items.length) consumePointer = 0;
-                count--;
                 return x;
             } finally {
                 // 退出核心区  
@@ -103,8 +108,8 @@ public class Solution{
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i <= 5; i++) {
-            // 创建生产者、消费者各5个
+        for (int i = 0; i <= 3; i++) {
+            // 创建生产者、消费者各3个
             new Thread(new Producer()).start();
             new Thread(new Consumer()).start();
         }

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82da2b54-b08f-4881-a9cb-4686885293d0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/NEU_OS_Exercises/producer_consumer/Solution$WareHouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NEU_OS_Exercises/producer_consumer/Solution$WareHouse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/producer_consumer/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/producer_consumer/Solution.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,12 +39,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="4" />
-          <entry key="java" value="3160" />
+          <entry key="java" value="3742" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3160" />
+          <entry key="JAVA" value="3742" />
           <entry key="PLAIN_TEXT" value="4" />
         </counts>
       </usages-collector>
@@ -93,11 +96,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1311">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="387">
+              <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -108,11 +111,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/producer_consumer/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="1558">
+              <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
             </state>
           </provider>
         </entry>
@@ -126,25 +126,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+            <state relative-caret-position="665">
+              <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1887#1888#0" expanded="true" />
-                <element signature="e#1961#1962#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/concurrent/Semaphore.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5187">
-              <caret line="321" column="30" selection-start-line="321" selection-start-column="30" selection-end-line="321" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -167,6 +156,8 @@
       <find>put</find>
       <find>ptr</find>
       <find>Index</find>
+      <find>not</find>
+      <find>finsih</find>
     </findStrings>
     <replaceStrings>
       <replace>chair</replace>
@@ -175,14 +166,15 @@
       <replace>produce</replace>
       <replace>Index</replace>
       <replace>Pointer</replace>
+      <replace>finish</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/baraber/BarberShop.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/producer_consumer/Solution.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/baraber/BarberShop.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -190,10 +182,10 @@
         <option value="$PROJECT_DIR$/src/baraber/BarberShop.java" />
         <option value="$PROJECT_DIR$/src/CPU_schedule/Solutiokn.java" />
         <option value="$PROJECT_DIR$/src/CPU_schedule/Solution.java" />
-        <option value="$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java" />
-        <option value="$PROJECT_DIR$/src/producer_consumer/Solution.java" />
         <option value="$PROJECT_DIR$/src/memory_management/Solution.java" />
         <option value="$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java" />
+        <option value="$PROJECT_DIR$/src/producer_consumer/Solution.java" />
+        <option value="$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java" />
       </list>
     </option>
   </component>
@@ -203,16 +195,17 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-10" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -230,20 +223,25 @@
               <item name="NEU_OS_Exercises" type="b2602c69:ProjectViewProjectNode" />
               <item name="NEU_OS_Exercises" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="CPU_schedule" type="462c0819:PsiDirectoryNode" />
+              <item name="baraber" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NEU_OS_Exercises" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NEU_OS_Exercises" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="producer_consumer" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545236268082" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545297485851" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -263,7 +261,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Solution_slice">
+  <component name="RunManager" selected="Application.Solution_pri">
     <configuration name="BarberShop" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="baraber.BarberShop" />
       <module name="NEU_OS_Exercises" />
@@ -324,9 +322,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Solution_slice" />
-        <item itemvalue="Application.Solution" />
         <item itemvalue="Application.Solution_pri" />
+        <item itemvalue="Application.Solution" />
+        <item itemvalue="Application.Solution_slice" />
         <item itemvalue="Application.BarberShop" />
       </list>
     </recent_temporary>
@@ -352,13 +350,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26148000" />
+    <option name="totallyTimeSpent" value="36257000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-5" y="0" width="695" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19168901" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.27315542" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -367,8 +365,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.37730497" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.14075068" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997344" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -407,30 +405,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java">
+    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/concurrent/Semaphore.java" />
+    <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1311">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        <state relative-caret-position="665">
+          <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/producer_consumer/Solution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-9.0.4/lib/src.zip!/java.base/java/util/concurrent/Semaphore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5187">
-          <caret line="321" column="30" selection-start-line="321" selection-start-column="30" selection-end-line="321" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -441,14 +423,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_slice.java">
+    <entry file="file://$PROJECT_DIR$/src/producer_consumer/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="48" column="13" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        <state relative-caret-position="1558">
+          <caret line="84" lean-forward="true" selection-start-line="84" selection-end-line="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CPU_schedule/Solution_pri.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="105" column="46" selection-start-line="105" selection-start-column="46" selection-end-line="105" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#1888#0" expanded="true" />
-            <element signature="e#1961#1962#0" expanded="true" />
           </folding>
         </state>
       </provider>

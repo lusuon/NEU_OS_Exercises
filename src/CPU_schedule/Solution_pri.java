@@ -11,39 +11,40 @@ public class Solution_pri {
 
     public static void main(String[] args){
         ArrayList<PCB> PCBs = new ArrayList<>();
-        PCBs.add(new PCB("P1",null,2,0,0,1,"ready"));
-        PCBs.add(new PCB("P2",null,3,0,0,5,"ready"));
-        PCBs.add(new PCB("P3",null,1,0,0,3,"ready"));
-        PCBs.add(new PCB("P4",null,2,0,0,4,"ready"));
-        PCBs.add(new PCB("P5",null,4,0,0,2,"ready"));
+        PCBs.add(new PCB("P1",null,2,0,1,"new"));
+        PCBs.add(new PCB("P2",null,4,0,5,"new"));
+        PCBs.add(new PCB("P3",null,5,0,3,"new"));
+        PCBs.add(new PCB("P4",null,7,0,4,"new"));
+        PCBs.add(new PCB("P5",null,8,0,2,"new"));
+
         PriorityQueue<PCB> tasks = new PriorityQueue<>();
         for (PCB process:PCBs){
             tasks.add(process);
         }
-        int count = 0;
+        int count = 0;//计时器
 
         while(tasks.size()!=0){
             count++;
+            //取出优先级最高进程，模拟运行
             PCB current = tasks.poll();
-
-
-
             current.status="working";
             current.needTime--;
             current.CPUTime++;
-            for (PCB process: tasks) {
-                if (process.priority == current.priority){
+            for (PCB process: PCBs) {
+                //已启动的程序的计时数+1
+                if (process.status.equals("ready")){
                     process.CPUTime++;
-                    process.wait++;
                 }
             }
+            //进程老化，优先级降低
             current.priority--;
-
-
+            //如果进程未完成，重新放入队列
             if(current.needTime!=0){
+                current.status = "ready";
                 tasks.add(current);
             }else{
                 current.status = "finish";
+                current.finish = count;
             }
 
             System.out.println("CPU TIME:"+count);
@@ -54,7 +55,7 @@ public class Solution_pri {
             }
             if (!current.status.equals("finish")) current.status="ready";
 
-            //rebuild the heap
+            //重新建堆
             ArrayList<PCB> temp = new ArrayList<>();
             while(!tasks.isEmpty()){
                 PCB pop = tasks.poll();
@@ -67,7 +68,9 @@ public class Solution_pri {
         }
         System.out.print("NAME\tRoundTime\tWaitingTime\n");
         for (PCB process:PCBs) {
-            System.out.println(process.wait);
+            System.out.print(process.name+"\t");
+            System.out.print(process.finish+"\t");
+            System.out.println(process.finish-process.burst);
         }
 
     }
@@ -79,17 +82,18 @@ public class Solution_pri {
         int needTime;
         int CPUTime;
         int priority;
-        int wait;
+        int burst;
+        int finish;
         String status;
 
 
-        public PCB(String name, PCB pointer, int needTime,int CPUTime,int wait , int priority, String status) {
+        public PCB(String name, PCB pointer, int needTime,int CPUTime, int priority, String status) {
             this.name = name;
             this.pointer = pointer;
             this.needTime = needTime;
             this.CPUTime = CPUTime;
-            this.wait = wait;
             this.priority = priority;
+            this.burst = needTime;
             this.status = status;
         }
 
@@ -99,7 +103,7 @@ public class Solution_pri {
         public int compareTo(Object o) {
             PCB another = (PCB)o;
             if (another.priority == this.priority){
-                return Integer.valueOf(another.name.split("P")[1])-Integer.valueOf(name.split("P")[1]);
+                return CPUTime-another.CPUTime;
             }else{
                 return another.priority - this.priority;
             }

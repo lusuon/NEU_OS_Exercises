@@ -11,11 +11,11 @@ public class Solution_slice {
      */
 
     public static void main(String[] args) {
-        PCB P5 = new PCB("P5", null, 2, 0, 0, "ready");
+        PCB P5 = new PCB("P5", null, 5, 0, 0, "ready");
         PCB P4 = new PCB("P4", P5, 2, 0, 0, "ready");
-        PCB P3 = new PCB("P3", P4, 2, 0, 0, "ready");
-        PCB P2 = new PCB("P2", P3, 2, 0, 0, "ready");
-        PCB P1 = new PCB("P1", P2, 2, 0, 0, "ready");
+        PCB P3 = new PCB("P3", P4, 3, 0, 0, "ready");
+        PCB P2 = new PCB("P2", P3, 7, 0, 0, "ready");
+        PCB P1 = new PCB("P1", P2, 6, 0, 0, "ready");
         P5.pointer = P1;
         PCB ready = P1;
         PCB finish = null;
@@ -24,14 +24,13 @@ public class Solution_slice {
 
 
         while(size!=1){
-
-
             if(current.needTime != 0){
                 current.status="working";
                 current.needTime--;
                 current.CPUTime++;
                 current.status="ready";
             }else{
+                System.out.println(current.name+" finsih");
                 current.status="finish";
                 size--;
             }
@@ -48,15 +47,14 @@ public class Solution_slice {
                 current.pointer = next;
             }
             current = current.pointer;
-
         }
-
 
 
         while(finish!=null){
             System.out.print(finish.name+"\t");
             finish = finish.pointer;
         }
+
     }
 
 
