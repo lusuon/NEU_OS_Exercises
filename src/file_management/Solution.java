@@ -2,6 +2,8 @@ package file_management;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Solution {
     /**
@@ -19,7 +21,7 @@ public class Solution {
      * 	因系统小，文件目录的检索使用了简单的线性搜索。
      * 	文件保护简单使用了三位保护码：允许读写执行、对应位为 1，对应位为0，则表示不允许读写、执行。
      * 	程序中使用的主要设计结构如下：
-     * 	主文件目录和用户文件目录（ MFD、UFD）
+     * 	主文件目录和用户文件目录（MFD、UFD）
      * 	打开文件目录（ AFD）（即运行文件目录）
      * （5）编一个通过屏幕选择命令的文件管理系统，每屏要为用户提供足够的选择信息，不需要打入冗长的命令。
      * （6）设计一个树型目录结构的文件系统，其根目录为 root，各分支可以是目录，也可以是文件，最后的叶子都是文件。
@@ -27,20 +29,21 @@ public class Solution {
     final static int SAVE_LIMIT = 10;
     final static int USER_LIMIT = 10;
     final static int OPEN_LIMIT = 5;
-    ArrayList<User> MFD;
+    HashMap<String,User> MFD = new HashMap<>();
+    User currentUser = null;
 
     private class User{
-        int uid;
         int openLimit = OPEN_LIMIT;
         int saveLimit = SAVE_LIMIT;
-        UserFile[] UFD;
-        UserFile[] AFD;
+        HashMap<String,UserFile> UFD = new HashMap<>();
+        HashMap<String,UserFile> AFD = new HashMap<>(); 
+        
 
 
         public User(int uid){
             this.uid = uid;
-            this.UFD = new UserFile[SAVE_LIMIT];
-            this.AFD = new UserFile[OPEN_LIMIT];
+            this.UFD = new HashMap<>();
+            this.AFD = new HashMap<>();
         }
 
         @Override
@@ -62,41 +65,87 @@ public class Solution {
     }
 
 
-    public void login(){
 
+    public void login(String uid){
+        User currentUser = MFD.get(uid);
+        if(currentUser == null) throw new NoSuchElementException("The user not existed.");
     }
+    public boolean isLogin(){return currentUser!=null;}
+
 
     public void dir(){
-        for (User u:MFD) {
-            System.out.println(u);
-            for (UserFile f:u.UFD){
+        for (Map.Entry<String,User> entry:MFD.entrySet()) {
+            System.out.println(entry.getKey());
+            for (Map.Entry<String,UserFile> entry2:entry.getValue().UFD.entrySet()){
                 System.out.print("\t\t");
-                System.out.println(f);
+                System.out.println(entry2.getKey()+"\t"+entry2.getValue());
             }
         }
     }
 
-    public void create(){
-
+    public void create(String fid,UserFile file){
+        if(!isLogin()) throw new NoSuchElementException("Not login");
+        HashMap<String,UserFile> currentUFD = currentUser.UFD;
+        
+        if(currentUFD.size()<SAVE_LIMIT){
+            currentUFD.put(fid,file);            
+            System.out.println(fid+" added");
+        }else 
+            throw new Exception("User dir full");
     }
 
-    public void delete(){
+    public void delete(String  fid){
+        if(!isLogin()) throw new NoSuchElementException("Not login");
+        HashMap<String,UserFile> currentUFD = currentUser.UFD;
+        
 
+        if(!currentUFD.isEmpty()){
+            if(currentUFD.get(fid)==null) throw new NoSuchElementException();
+            currentUFD.remove(fid);
+            System.out.println(fid+" removed");
+        }else 
+            throw new Exception("User dir empty.");
     }
 
-    public void open(){
+    public void open(String fid){
+        if(!isLogin()) throw new NoSuchElementException("Not login");
 
+        UserFile operating = currentUFD.get(fid);
+        if(currentUser.AFD.get(fid)==null){
+            currentUser.AFD.put(fid,currentUser.UFD.get(fid));
+            operating.protect = 1;
+        }else{
+            throw new Exception("The file has been opened.");
+        }        
     }
 
-    public void close(){
-
+    public void close(String fid){
+        if(!isLogin()) throw new NoSuchElementException("Not login");
+        UserFile operating = currentUFD.get(fid);
+        if(currentUser.AFD.get(fid)!=null){
+            currentUser.AFD.remove(fid);
+            operating.protect = 0;
+        }else{
+            throw new Exception("The file has not been opened.");
+        }
     }
+
+    //WORKING ON!
 
     public void read(){
-
+        if(!isLogin()) throw new NoSuchElementException("Not login");
+        UserFile operating = currentAFD.get(fid);
+        
+        if(operating!=null){
+            
+        }
+        System.out.println("Reading");
+        
     }
 
     public void write(){
-
+        if(!isLogin()) throw new NoSuchElementException("Not login");
+        UserFile operating = currentUFD.get(fid);
+        System.out.println("Writing");
     }
 }
