@@ -13,6 +13,18 @@ public class Solution {
      * 3.源文件可以进行读写保护。
      */
 
+    public static void main(String args[]) throws Exception {
+        Solution solution = new Solution();
+        User user0 = new User("test0");
+        User user1 = new User("test1");
+
+        MFD.put(user0.uid,user0);
+        MFD.put(user1.uid,user1);
+
+        solution.login("user0");
+        solution.create("test.txt","0000",1);
+
+    }
     /**
      * （1）设计一个10个用户的文件系统，每次用户可保存10个文件，一次运行用户可以打开5个文件。
      * （2）程序采用二级文件目录（即设置主目录[MFD]）和用户文件目录（UED）。另外，为打开文件设置了运行文件目录（AFD）。
@@ -29,18 +41,17 @@ public class Solution {
     final static int SAVE_LIMIT = 10;
     final static int USER_LIMIT = 10;
     final static int OPEN_LIMIT = 5;
-    HashMap<String,User> MFD = new HashMap<>();
+    private static HashMap<String,User> MFD = new HashMap<>();
     User currentUser = null;
 
-    private class User{
-        int openLimit = OPEN_LIMIT;
-        int saveLimit = SAVE_LIMIT;
-        HashMap<String,UserFile> UFD = new HashMap<>();
-        HashMap<String,UserFile> AFD = new HashMap<>(); 
+    private static class User{
+        String uid;
+        HashMap<String,UserFile> UFD = new HashMap<>();//用户文件目录
+        HashMap<String,UserFile> AFD = new HashMap<>(); //用户打开文件目录
         
 
 
-        public User(int uid){
+        public User(String uid){
             this.uid = uid;
             this.UFD = new HashMap<>();
             this.AFD = new HashMap<>();
@@ -48,19 +59,28 @@ public class Solution {
 
         @Override
         public String toString() {
-            return Integer.toString(this.uid);
+            return "User\t"+uid;
         }
     }
 
     public class UserFile{
         String name;
         int protect;
-        int address;
+        String address;
         int length;
+
+        public UserFile(String name, String address, int length) {
+            this.name = name;
+            this.protect = 0;
+            this.address = address;
+            this.length = length;
+        }
+
+
 
         @Override
         public String toString() {
-            return name+"\tprotect status:"+(protect==0?"protected":"unProtected")+"\tlength:"+Integer.toString(length)+"\taddress:"+Integer.toString(address);
+            return name+"\tprotect status:"+(protect==0?"protected":"unProtected")+"\tlength:"+Integer.toString(length)+"\taddress:"+address;
         }
     }
 
@@ -68,84 +88,112 @@ public class Solution {
 
     public void login(String uid){
         User currentUser = MFD.get(uid);
-        if(currentUser == null) throw new NoSuchElementException("The user not existed.");
+        if(currentUser == null) throw new NoSuchElementException("The user does not existed.");
+        System.out.println("Login successfully.");
     }
     public boolean isLogin(){return currentUser!=null;}
 
 
     public void dir(){
-        for (Map.Entry<String,User> entry:MFD.entrySet()) {
-            System.out.println(entry.getKey());
-            for (Map.Entry<String,UserFile> entry2:entry.getValue().UFD.entrySet()){
+        for (Map.Entry<String,User> userEntry:MFD.entrySet()) {
+            System.out.println(userEntry.getValue());
+            for (Map.Entry<String,UserFile> fileEntry:userEntry.getValue().UFD.entrySet()){
                 System.out.print("\t\t");
-                System.out.println(entry2.getKey()+"\t"+entry2.getValue());
+                System.out.println(fileEntry.getKey()+"\t"+fileEntry.getValue());
             }
         }
     }
 
-    public void create(String fid,UserFile file){
+    public void create(String name,String address,int length) throws Exception {
         if(!isLogin()) throw new NoSuchElementException("Not login");
+
         HashMap<String,UserFile> currentUFD = currentUser.UFD;
+        UserFile file = new UserFile(name,address,length);
         
         if(currentUFD.size()<SAVE_LIMIT){
-            currentUFD.put(fid,file);            
-            System.out.println(fid+" added");
+            currentUFD.put(name,file);
+            System.out.println(name+" added");
         }else 
             throw new Exception("User dir full");
     }
 
-    public void delete(String  fid){
+    public void delete(String name) throws Exception {
         if(!isLogin()) throw new NoSuchElementException("Not login");
         HashMap<String,UserFile> currentUFD = currentUser.UFD;
         
 
         if(!currentUFD.isEmpty()){
-            if(currentUFD.get(fid)==null) throw new NoSuchElementException();
-            currentUFD.remove(fid);
-            System.out.println(fid+" removed");
-        }else 
-            throw new Exception("User dir empty.");
+            if(currentUFD.get(name)==null) throw new NoSuchElementException();
+            currentUFD.remove(name);
+            System.out.println(name+" removed");
+        }else throw new Exception("User dir empty.");
     }
 
-    public void open(String fid){
-        if(!isLogin()) throw new NoSuchElementException("Not login");
+    public void open(String name) throws Exception {
+        if(!isLogin()) throw new Exception("Not login");
+        HashMap<String,UserFile> currentUFD = currentUser.UFD;
+        HashMap<String,UserFile> currentAFD = currentUser.AFD;
+        UserFile operating = currentUFD.get(name);
 
-        UserFile operating = currentUFD.get(fid);
-        if(currentUser.AFD.get(fid)==null){
-            currentUser.AFD.put(fid,currentUser.UFD.get(fid));
+        if(currentAFD.get(name)==null && operating!=null) {
+            currentAFD.put(name, operating);
             operating.protect = 1;
+        }else if(operating==null){
+            throw new Exception("File not found..");
         }else{
             throw new Exception("The file has been opened.");
         }        
     }
 
-    public void close(String fid){
+    public void close(String name) throws Exception {
         if(!isLogin()) throw new NoSuchElementException("Not login");
-        UserFile operating = currentUFD.get(fid);
-        if(currentUser.AFD.get(fid)!=null){
-            currentUser.AFD.remove(fid);
+        HashMap<String,UserFile> currentUFD = currentUser.UFD;
+        HashMap<String,UserFile> currentAFD = currentUser.AFD;
+        UserFile operating = currentUFD.get(name);
+
+        if(currentAFD.get(name)!=null && operating!=null) {
+            currentAFD.remove(name);
             operating.protect = 0;
+        }else if(operating==null){
+            throw new Exception("File not found..");
         }else{
             throw new Exception("The file has not been opened.");
         }
     }
 
-    //WORKING ON!
-
-    public void read(){
+    public void read(String name) throws Exception {
         if(!isLogin()) throw new NoSuchElementException("Not login");
-        UserFile operating = currentAFD.get(fid);
-        
-        if(operating!=null){
-            
+        HashMap<String,UserFile> currentAFD = currentUser.AFD;
+        UserFile operating = currentAFD.get(name);
+
+        if(operating!=null && operating.protect== 1) {
+            operating.protect = 0;
+            System.out.print("Reading:\n\t");
+            System.out.println(operating);
+            operating.protect = 1;
+        }else if(operating==null){
+            throw new Exception("File not opened.");
+        }else if(operating.protect == 0){
+            throw new Exception("The file is protected.");
         }
-        System.out.println("Reading");
         
     }
 
-    public void write(){
+    public void write(String name) throws Exception {
         if(!isLogin()) throw new NoSuchElementException("Not login");
-        UserFile operating = currentUFD.get(fid);
-        System.out.println("Writing");
+        HashMap<String,UserFile> currentAFD = currentUser.AFD;
+        UserFile operating = currentAFD.get(name);
+
+
+        if(operating!=null && operating.protect== 1) {
+            operating.protect = 0;
+            System.out.print("Writing:\n\t");
+            System.out.println(operating);
+            operating.protect = 1;
+        }else if(operating==null){
+            throw new Exception("File not opened.");
+        }else if(operating.protect == 0){
+            throw new Exception("The file is protected.");
+        }
     }
 }
