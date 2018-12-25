@@ -1,11 +1,10 @@
 package file_management;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-public class Solution {
+public class FileSys {
     /**
      * 要求设计一个n个用户的简单二级文件系统，每次用户可保存m个文件，用户在一次运行中只能打开一个文件，对文件必须设置保护措施。要求做到以下几点：
      * 1.可以实现下列几条命令（至少4条）：login 用户登录；dir列文件目录；create创建文件；delete删除文件；open打开文件；close关闭文件；read读文件；write写文件。
@@ -14,15 +13,29 @@ public class Solution {
      */
 
     public static void main(String args[]) throws Exception {
-        Solution solution = new Solution();
-        User user0 = new User("test0");
-        User user1 = new User("test1");
+        FileSys solution = new FileSys();
+        User test0 = new User("test0");
+        User test1 = new User("test1");
 
-        MFD.put(user0.uid,user0);
-        MFD.put(user1.uid,user1);
+        MFD.put(test0.uid,test0);
+        MFD.put(test1.uid,test1);
 
-        solution.login("user0");
+        solution.login("test0");
+
+        System.out.println("Create some files.");
         solution.create("test.txt","0000",1);
+        solution.create("test1.txt","0001",2);
+        solution.dir();
+
+        System.out.println("Deleting test1.txt.");
+        solution.delete("test1.txt");
+        solution.dir();
+
+        System.out.println("Open test.txt and read/write it,then close.");
+        solution.open("test.txt");
+        solution.read("test.txt");
+        solution.write("test.txt");
+        solution.close("test.txt");
 
     }
     /**
@@ -86,10 +99,10 @@ public class Solution {
 
 
 
-    public void login(String uid){
-        User currentUser = MFD.get(uid);
+    public void login(String name){
+        currentUser = MFD.get(name);
         if(currentUser == null) throw new NoSuchElementException("The user does not existed.");
-        System.out.println("Login successfully.");
+        System.out.println("Login successfully.Welcome"+currentUser);
     }
     public boolean isLogin(){return currentUser!=null;}
 
@@ -99,7 +112,7 @@ public class Solution {
             System.out.println(userEntry.getValue());
             for (Map.Entry<String,UserFile> fileEntry:userEntry.getValue().UFD.entrySet()){
                 System.out.print("\t\t");
-                System.out.println(fileEntry.getKey()+"\t"+fileEntry.getValue());
+                System.out.println("\t\t"+fileEntry.getValue());
             }
         }
     }

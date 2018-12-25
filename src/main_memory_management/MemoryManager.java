@@ -3,9 +3,10 @@ package main_memory_management;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class Solution{
+public class MemoryManager {
     int count = 0;//模拟计时
     int blockLength = 128;//内存块长度
+    int limit = 5;
 
     private static ArrayList<PTEntry> PT = new ArrayList<>();//模拟页表
 
@@ -31,6 +32,11 @@ public class Solution{
             PTEntry another =(PTEntry) o;
             return time - another.time;
         }
+
+        @Override
+        public String toString() {
+            return Integer.toString(pageNum)+"\t"+Integer.toString(symbol)+"\t"+Integer.toString(memBlock)+"\t"+Integer.toString(modify)+"\t"+location+"\t"+Integer.toString(time);
+        }
     }
 
     private String convert(int pageN,int unit){
@@ -53,28 +59,49 @@ public class Solution{
     }
 
     private void handle(String convertResult){
-        int pageNum = Integer.valueOf(convertResult.split("\\*")[1]);
-        PriorityQueue<PTEntry> queue = new PriorityQueue<>();//用于实现FIFO的队列
-        PTEntry newest = null;
+        try{
+            int pageNum = Integer.valueOf(convertResult.split("\\*")[1]);
+            int running = 0;
+            PTEntry newest = null;
 
-        for (PTEntry e:PT){
-            if(e.pageNum!=pageNum) queue.add(e);
-            else newest = e;
+            for (PTEntry e:PT) {
+                if(e.symbol == 1) running++;
+                if(e.pageNum ==pageNum) newest = e;
+            }
+            if(running >=limit){
+                PriorityQueue<PTEntry> queue = new PriorityQueue<>();//用于实现FIFO的队列
+                for (PTEntry e:PT){
+                    if(e.pageNum!=pageNum) queue.add(e);
+                }
+                PTEntry oldest = queue.poll();
+
+                //修改页表
+                newest.time = count;
+                newest.symbol = 1;
+                newest.memBlock = oldest.memBlock;
+                oldest.memBlock = -1;
+                oldest.symbol = 0;
+
+                if(oldest.modify == 1) System.out.println("Move out:page "+oldest.pageNum);
+                System.out.println("Move in:page "+pageNum);
+            }else{
+                newest.symbol = 1;
+            }
+
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("Page has been placed in the memory,no interruption occured.");
         }
-        PTEntry oldest = queue.poll();
-
-        //修改页表
-        newest.time = count;
-
-
-        if(oldest.modify == 1) System.out.println("Move out:page "+oldest.pageNum);
-        System.out.println("Move in:page "+pageNum);
     }
 
-
+    private void showPT(){
+        System.out.println("pageNum\tsymbol\tmemBlock\tmodify\tlocation\ttime");
+        for (PTEntry e:PT){
+            System.out.println(e);
+        }
+    }
     public static void main(String args[]){
-        Solution s = new Solution();
-        PTEntry p0 = new PTEntry(0,1,5,0,"011",0);
+        MemoryManager mm = new MemoryManager();
+        PTEntry p0 = new PTEntry(0,1,5,1,"011",0);
         PTEntry p1 = new PTEntry(1,1,8,0,"012",0);
         PTEntry p2 = new PTEntry(2,1,9,0,"013",0);
         PTEntry p3 = new PTEntry(3,1,1,0,"021",0);
@@ -90,8 +117,12 @@ public class Solution{
         PT.add(p5);
         PT.add(p6);
 
-        System.out.println(s.convert(0,24));
-        s.handle(s.convert(4,24));
+        mm.showPT();
 
+        System.out.println(mm.convert(0,24));
+        mm.handle(mm.convert(4,24));
+        mm.handle(mm.convert(3,24));
+
+        mm.showPT();
     }
 }
