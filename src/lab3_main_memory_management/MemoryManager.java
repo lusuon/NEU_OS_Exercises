@@ -2,6 +2,7 @@ package main_memory_management;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 public class MemoryManager {
     int count = 0;//模拟计时
@@ -86,10 +87,25 @@ public class MemoryManager {
                 System.out.println("Move in:page "+pageNum);
             }else{
                 newest.symbol = 1;
+                allocMem(newest);
             }
 
         }catch (IndexOutOfBoundsException e){
             System.out.println("Page has been placed in the memory,no interruption occured.");
+        }
+    }
+
+    private void allocMem(PTEntry e){
+        Random random = new Random();
+        Boolean duplicate = true;
+        while(duplicate){
+            duplicate = false;
+            e.memBlock =random.nextInt(512);
+            for (PTEntry pte:PT) {
+                if(pte!=e){
+                    if(pte.memBlock==e.memBlock) duplicate =true;
+                }
+            }
         }
     }
 
@@ -101,8 +117,8 @@ public class MemoryManager {
     }
     public static void main(String args[]){
         MemoryManager mm = new MemoryManager();
-        PTEntry p0 = new PTEntry(0,1,5,1,"011",0);
-        PTEntry p1 = new PTEntry(1,1,8,0,"012",0);
+        PTEntry p0 = new PTEntry(0,1,5,1,"011",2);
+        PTEntry p1 = new PTEntry(1,1,8,0,"012",1);
         PTEntry p2 = new PTEntry(2,1,9,0,"013",0);
         PTEntry p3 = new PTEntry(3,1,1,0,"021",0);
         PTEntry p4 = new PTEntry(4,0,-1,0,"022",0);
@@ -121,6 +137,7 @@ public class MemoryManager {
 
         System.out.println(mm.convert(0,24));
         mm.handle(mm.convert(4,24));
+        System.out.println("Try to handle page3:");
         mm.handle(mm.convert(3,24));
 
         mm.showPT();

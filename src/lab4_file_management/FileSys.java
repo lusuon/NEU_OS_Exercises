@@ -142,7 +142,7 @@ public class FileSys {
         }else throw new Exception("User dir empty.");
     }
 
-    public void open(String name) throws Exception {
+    public UserFile open(String name) throws Exception {
         if(!isLogin()) throw new Exception("Not login");
         HashMap<String,UserFile> currentUFD = currentUser.UFD;
         HashMap<String,UserFile> currentAFD = currentUser.AFD;
@@ -156,6 +156,8 @@ public class FileSys {
         }else{
             throw new Exception("The file has been opened.");
         }        
+        
+        return operating;
     }
 
     public void close(String name) throws Exception {
